@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1541255062093.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "173808156",
+    "id" : "C0B49335",
+    "lastKnownWriteTime" : 1541255107,
+    "last_content_update" : 1541255107267,
+    "path" : "~/RELAMPAGOReportes/preliminary_report.R",
+    "project_path" : "preliminary_report.R",
+    "properties" : {
+        "cursorPosition" : "87,31",
+        "scrollLine" : "68"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
