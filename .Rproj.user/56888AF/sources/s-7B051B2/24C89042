@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1541418987244.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "24C89042",
+    "lastKnownWriteTime" : 0,
+    "last_content_update" : 1541418987244,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "E15608E5",
+        "caption" : "freq",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=freq&cache_key=E15608E5",
+        "displayedObservations" : 6,
+        "environment" : "",
+        "object" : "freq",
+        "preview" : 0,
+        "totalObservations" : 6,
+        "variables" : 3
+    },
+    "relative_order" : 8,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

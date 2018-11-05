@@ -7,13 +7,13 @@
     "folds" : "",
     "hash" : "0",
     "id" : "D4C1635A",
-    "lastKnownWriteTime" : 1541255045,
-    "last_content_update" : 1541255045343,
+    "lastKnownWriteTime" : 1541425360,
+    "last_content_update" : 1541425360671,
     "path" : "~/RELAMPAGOReportes/complete_report.R",
     "project_path" : "complete_report.R",
     "properties" : {
-        "cursorPosition" : "89,8",
-        "scrollLine" : "68"
+        "cursorPosition" : "96,0",
+        "scrollLine" : "75"
     },
     "relative_order" : 2,
     "source_on_save" : false,

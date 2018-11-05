@@ -6,6 +6,7 @@
 # 
 #########################################################################################
 
+
 # Libraries
 library(googlesheets)
 library(data.table)
@@ -29,7 +30,7 @@ reports_s$var2 <- ifelse(reports_s$var2 == "Sí", "Inundaciones/Crecidas", NA)
 
 reports_s$date <- force_tz(as.POSIXct(as_datetime(reports_s$date, format = "%m/%d/%Y %H:%M:%S")), 
                            "America/Buenos_Aires")
-hour(reports_s$date) <- hour(reports_s$date) - 3
+hour(reports_s$date) <- hour(reports_s$date) + 3
 reports_s$date <- force_tz(reports_s$date, tzone = "UTC") #Convierto a UTC posta
 
 # Long format
@@ -64,9 +65,15 @@ title <- paste0("COMPLETE SEVERE WEATHER REPORTS\nfrom ", init_time, "Z to ", en
 
 df <- subset(reports_l, !is.na(value) & date %between% c(init_time, end_time))
 df$int <- interval(init_time, df$date)
-  
-p <- ggplot(df, aes(lon, lat)) +
-  geom_point(aes(color = as.numeric(int)/3600, shape = value), alpha = 0.8, size = 2) +
+
+freq <-  as.data.table(table(df$value))  %>% 
+  .[, shape := c(15, 16, 17, 0, 4, 2)] %>% 
+  .[N != 0] 
+freq[, label := paste0(freq$V1, " (", freq$N, ")")]
+
+
+ggplot(df, aes(lon, lat)) +
+  geom_point(aes(color = as.numeric(int)/3600, shape = value), alpha = 0.8, size = 4) +
   geom_path(data = mapa.ar, aes(x = lon, group = group), color = "black", size = 0.2) +
   scale_color_viridis_c(name = "Hours from 09Z", option = "plasma", direction = -1,
                         limits = c(0, 24),
@@ -76,7 +83,7 @@ p <- ggplot(df, aes(lon, lat)) +
                                                  label.theme = element_text(size = 8),
                                                  label.vjust = 0.8),
                         breaks = MakeBreaks(4)) +
-  scale_shape_manual(name = NULL, values = c(15, 16, 17, 0, 1, 2)) +
+  scale_shape_manual(name = NULL, values = freq$shape, labels = freq$label) +
   scale_x_longitude(name = "Lon", limits = c(-71, -58), expand = c(0,0), ticks = 2.5) +
   scale_y_latitude(name = "Lat", limits = c(-37, -28), expand = c(0,0), ticks = 2) +
   ggtitle(title) +
@@ -85,6 +92,5 @@ p <- ggplot(df, aes(lon, lat)) +
   theme(plot.title = element_text(size = 14, hjust = 0.5),
         legend.position = "bottom")
 
-filename <- paste0("COMPLETE_severe_weather_reports_", format(end_time, "%Y%m%d%H%M%S"), ".png")
+filename <- paste0("fig/COMPLETE_severe_weather_reports_", format(end_time, "%Y%m%d%H%M%S"), ".png")
 ggsave(filename, dpi = 300, height = 15, units = "cm")
-        
