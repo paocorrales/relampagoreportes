@@ -2,10 +2,9 @@
 #########################################################################################
 #
 # Severe Wather Reports by citizens for RELAMPAGO Proyect
-# COMPLETE Report from 09Z to 09Z every day ploted at 1930Z
+# COMPLETE Report from 09Z to 09Z every day ploted at 08Z
 # 
 #########################################################################################
-
 
 # Libraries
 library(googlesheets)
@@ -20,6 +19,7 @@ library(metR)
 ###### Reading the data from Google Spreadsheet
 #gs_ls() #Return a tibble with google sheets available
 
+gs_auth(token = "googlesheets_token.rds")
 r <- gs_title("Reportes_preprocesados")
 reports <- setDF(gs_read(ss = r, ws = "Hoja 1"))
 
@@ -52,8 +52,7 @@ levels(reports_l$value) <- labels
 
 ##### Ploting
 
-mapa.ar <- setDT(fortify(rnaturalearth::ne_states(country = c("Argentina"))))
-setnames(mapa.ar, "long", "lon")
+mapa.ar <- readRDS("mapa.rds")
 
 day <- Sys.Date()
 
@@ -87,7 +86,7 @@ ggplot(df, aes(lon, lat)) +
   scale_x_longitude(name = "Lon", limits = c(-71, -58), expand = c(0,0), ticks = 2.5) +
   scale_y_latitude(name = "Lat", limits = c(-37, -28), expand = c(0,0), ticks = 2) +
   ggtitle(title) +
-  coord_map() +
+  coord_equal() +
   theme_linedraw() +
   theme(plot.title = element_text(size = 14, hjust = 0.5),
         legend.position = "bottom")
