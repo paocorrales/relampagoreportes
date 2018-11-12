@@ -2,10 +2,9 @@
 #########################################################################################
 #
 # Severe Wather Reports by citizens for RELAMPAGO Proyect
-# COMPLETE Report from 09Z to 09Z every day ploted at 1930Z
+# PRELIMINARY Report from 09Z to 09Z every day ploted at 08Z
 # 
 #########################################################################################
-
 
 # Libraries
 library(googlesheets)
@@ -20,6 +19,7 @@ library(metR)
 ###### Reading the data from Google Spreadsheet
 #gs_ls() #Return a tibble with google sheets available
 
+gs_auth(token = "googlesheets_token.rds")
 r <- gs_title("Reportes_preprocesados")
 reports <- setDF(gs_read(ss = r, ws = "Hoja 1"))
 
@@ -52,16 +52,15 @@ levels(reports_l$value) <- labels
 
 ##### Ploting
 
-mapa.ar <- setDT(fortify(rnaturalearth::ne_states(country = c("Argentina"))))
-setnames(mapa.ar, "long", "lon")
+mapa.ar <- readRDS("mapa.rds")
 
 day <- Sys.Date()
 
-end_time <- as_datetime(paste0(as.character(day), " 09:00:00"))
-print(end_time)
-init_time <- end_time
-day(init_time) <- day(end_time) - 1
-title <- paste0("COMPLETE SEVERE WEATHER REPORTS\nfrom ", init_time, "Z to ", end_time, "Z")
+init_time <- as_datetime(paste0(as.character(day), " 09:00:00"))
+
+end_time <- init_time
+day(end_time) <- day(init_time) + 1
+title <- paste0("PRELIMINARY SEVERE WEATHER REPORTS\nfrom ", init_time, "Z to ", end_time, "Z")
 
 df <- subset(reports_l, !is.na(value) & date %between% c(init_time, end_time))
 df$int <- interval(init_time, df$date)
@@ -75,7 +74,7 @@ freq[, label := paste0(freq$V1, " (", freq$N, ")")]
 ggplot(df, aes(lon, lat)) +
   geom_point(aes(color = as.numeric(int)/3600, shape = value), alpha = 0.8, size = 4) +
   geom_path(data = mapa.ar, aes(x = lon, group = group), color = "black", size = 0.2) +
-  scale_color_viridis_c(name = "Hours from 09Z", option = "plasma", direction = -1,
+  scale_color_viridis_c(name = "Hours since 09Z", option = "plasma", direction = -1,
                         limits = c(0, 24),
                         guide = guide_colorstrip(title.position = "top",
                                                  title.theme = element_text(size = 10),
@@ -87,10 +86,10 @@ ggplot(df, aes(lon, lat)) +
   scale_x_longitude(name = "Lon", limits = c(-71, -58), expand = c(0,0), ticks = 2.5) +
   scale_y_latitude(name = "Lat", limits = c(-37, -28), expand = c(0,0), ticks = 2) +
   ggtitle(title) +
-  coord_map() +
+  coord_equal() +
   theme_linedraw() +
   theme(plot.title = element_text(size = 14, hjust = 0.5),
         legend.position = "bottom")
 
-filename <- paste0("fig/COMPLETE_severe_weather_reports_", format(end_time, "%Y%m%d%H%M%S"), ".png")
+filename <- paste0("fig/PRELIMINARY_severe_weather_reports_", format(end_time, "%Y%m%d%H%M%S"), ".png")
 ggsave(filename, dpi = 300, height = 15, units = "cm")

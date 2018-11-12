@@ -1,21 +1,21 @@
 {
     "collab_server" : "",
     "contents" : "",
-    "created" : 1541255062093.000,
+    "created" : 1541503852030.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "3852099956",
-    "id" : "C0B49335",
-    "lastKnownWriteTime" : 1541425429,
-    "last_content_update" : 1541425429396,
+    "hash" : "2614365178",
+    "id" : "3009602C",
+    "lastKnownWriteTime" : 1542050593,
+    "last_content_update" : 1542050593419,
     "path" : "~/RELAMPAGOReportes/preliminary_report.R",
     "project_path" : "preliminary_report.R",
     "properties" : {
-        "cursorPosition" : "62,28",
-        "scrollLine" : "49"
+        "cursorPosition" : "76,43",
+        "scrollLine" : "63"
     },
-    "relative_order" : 3,
+    "relative_order" : 7,
     "source_on_save" : false,
     "source_window" : "",
     "type" : "r_source"

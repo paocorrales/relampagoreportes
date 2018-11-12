@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1541876449906.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "9B72667",
+    "lastKnownWriteTime" : 1542050603,
+    "last_content_update" : 1542050603419,
+    "path" : "~/RELAMPAGOReportes/now_report.R",
+    "project_path" : "now_report.R",
+    "properties" : {
+        "cursorPosition" : "76,43",
+        "scrollLine" : "56"
+    },
+    "relative_order" : 8,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
