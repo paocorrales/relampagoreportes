@@ -71,25 +71,30 @@ freq <-  as.data.table(table(df$value))  %>%
 freq[, label := paste0(freq$V1, " (", freq$N, ")")]
 
 
+
 ggplot(df, aes(lon, lat)) +
-  geom_point(aes(color = as.numeric(int)/3600, shape = value), alpha = 0.8, size = 4) +
+  geom_point(aes(color = as.numeric(int)/3600, shape = value), alpha = 0.6, size = 4) +
   geom_path(data = mapa.ar, aes(x = lon, group = group), color = "black", size = 0.2) +
   scale_color_viridis_c(name = "Hours since 09Z", option = "plasma", direction = -1,
                         limits = c(0, 24),
                         guide = guide_colorstrip(title.position = "top",
                                                  title.theme = element_text(size = 10),
                                                  barheight = 0.5,
+                                                 barwidth = 5,
                                                  label.theme = element_text(size = 8),
                                                  label.vjust = 0.8),
                         breaks = MakeBreaks(4)) +
-  scale_shape_manual(name = NULL, values = freq$shape, labels = freq$label) +
+  scale_shape_manual(name = NULL, values = freq$shape, labels = freq$label, 
+                     guide = guide_legend(ncol = 3)) +
   scale_x_longitude(name = "Lon", limits = c(-71, -58), expand = c(0,0), ticks = 2.5) +
   scale_y_latitude(name = "Lat", limits = c(-37, -28), expand = c(0,0), ticks = 2) +
   ggtitle(title) +
   coord_equal() +
   theme_linedraw() +
-  theme(plot.title = element_text(size = 14, hjust = 0.5),
-        legend.position = "bottom")
+  theme(plot.title = element_text(size = 13, hjust = 0.5),
+        legend.position = "bottom",
+        legend.key.size = unit(0.8, "line"))
+report.public_weather.YYYYMMDDHHmm.summary.pdf 
 
-filename <- paste0("fig/PRELIMINARY_severe_weather_reports_", format(end_time, "%Y%m%d%H%M%S"), ".png")
+filename <- paste0("fig/report.public_weather.", format(end_time, "%Y%m%d%H%M"), ".preliminary_summary.png")
 ggsave(filename, dpi = 300, height = 15, units = "cm")

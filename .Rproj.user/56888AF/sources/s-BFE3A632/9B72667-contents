@@ -2,7 +2,7 @@
 #########################################################################################
 #
 # Severe Wather Reports by citizens for RELAMPAGO Proyect
-# COMPLETE Report from 09Z to 09Z every day ploted at 08Z
+# PRELIMINARY Report from 09Z to 09Z every day ploted at 08Z
 # 
 #########################################################################################
 
@@ -44,7 +44,6 @@ reports_l$value <- ifelse(reports_l$value %in% c("Tromba", "Torbellino de Polvo"
 levels <- c("Granizo", "Inundaciones/Crecidas", "Lluvias intensas", 
             "Ráfagas y/o vientos intensos", "Rayos y/o truenos", "Tornado" )
 labels <- c("Hail", "Floods", "Heavy rain", "Strong wind/gust", "Lightning", "Tornado")
-#labels <- c("Granizo", "Inundación", "Lluvia intensa", "Viento intenso", "Rayos", "Tornado")
 
 reports_l$value <- as.factor(reports_l$value)
 
@@ -57,12 +56,11 @@ mapa.ar <- readRDS("mapa.rds")
 
 day <- Sys.Date()
 
-end_time <- as_datetime(paste0(as.character(day), " 09:00:00"))
-print(end_time)
-init_time <- end_time
-day(init_time) <- day(end_time) - 1
-title <- paste0("COMPLETE SEVERE WEATHER REPORTS\nfrom ", init_time, "Z to ", end_time, "Z")
-#title <- paste0("REPORTES DE TIEMPO SEVERO \nentre las ", init_time, "Z y ", end_time, "Z")
+init_time <- as_datetime(paste0(as.character(day), " 09:00:00"))
+
+end_time <- init_time
+day(end_time) <- day(init_time) + 1
+title <- paste0("PRELIMINARY SEVERE WEATHER REPORTS\nfrom ", init_time, "Z to ", end_time, "Z")
 
 df <- subset(reports_l, !is.na(value) & date %between% c(init_time, end_time))
 df$int <- interval(init_time, df$date)
@@ -71,6 +69,7 @@ freq <-  as.data.table(table(df$value))  %>%
   .[, shape := c(15, 16, 17, 0, 4, 2)] %>% 
   .[N != 0] 
 freq[, label := paste0(freq$V1, " (", freq$N, ")")]
+
 
 
 ggplot(df, aes(lon, lat)) +
@@ -95,6 +94,7 @@ ggplot(df, aes(lon, lat)) +
   theme(plot.title = element_text(size = 13, hjust = 0.5),
         legend.position = "bottom",
         legend.key.size = unit(0.8, "line"))
+report.public_weather.YYYYMMDDHHmm.summary.pdf 
 
-filename <- paste0("fig/COMPLETE_severe_weather_reports_", format(end_time, "%Y%m%d%H%M%S"), ".png")
+filename <- paste0("fig/report.public_weather.", format(end_time, "%Y%m%d%H%M"), ".preliminary_summary.png")
 ggsave(filename, dpi = 300, height = 15, units = "cm")
