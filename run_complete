@@ -1,0 +1,12 @@
+#!/bin/bash
+
+infold='/home/paola.corrales/relampagoreportes/fig'
+day=$(date +%Y%m%d -d "yesterday")
+filename=${infold}'/surface.public_weather.'${day}'0900.complete_report.png'
+
+ftp -n <<EOF
+open catalog.eol.ucar.edu
+user anonymous
+cd pub/incoming/catalog/relampago
+put $filename
+EOF

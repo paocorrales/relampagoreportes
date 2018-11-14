@@ -97,5 +97,5 @@ ggplot(df, aes(lon, lat)) +
         legend.key.size = unit(0.8, "line"))
 
 
-filename <- paste0("fig/surface.public_weather.", format(end_time, "%Y%m%d%H%M"), ".preliminary_report.png")
+filename <- paste0("fig/surface.public_weather.", format(init_time, "%Y%m%d%H%M"), ".preliminary_report.png")
 ggsave(filename, dpi = 300, height = 15, units = "cm")

@@ -56,11 +56,11 @@ mapa.ar <- readRDS("mapa.rds")
 
 day <- Sys.Date()
 
-init_time <- as_datetime(paste0(as.character(day), " 09:00:00"))
+init_time <- as_datetime("2018-11-13 09:00:00")
 
 end_time <- init_time
 day(end_time) <- day(init_time) + 1
-title <- paste0("PRELIMINARY SEVERE WEATHER REPORTS\nfrom ", init_time, "Z to ", end_time, "Z")
+title <- paste0("COMPLETE SEVERE WEATHER REPORTS\nfrom ", init_time, "Z to ", end_time, "Z")
 
 df <- subset(reports_l, !is.na(value) & date %between% c(init_time, end_time))
 df$int <- interval(init_time, df$date)
@@ -96,5 +96,5 @@ ggplot(df, aes(lon, lat)) +
         legend.key.size = unit(0.8, "line"))
 
 
-filename <- paste0("fig/surface.public_weather.", format(end_time, "%Y%m%d%H%M"), ".preliminary_report.png")
+filename <- paste0("fig/surface.public_weather.", format(init_time, "%Y%m%d%H%M"), ".complete_report.png")
 ggsave(filename, dpi = 300, height = 15, units = "cm")
