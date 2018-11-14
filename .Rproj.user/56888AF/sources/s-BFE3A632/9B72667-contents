@@ -94,7 +94,7 @@ ggplot(df, aes(lon, lat)) +
   theme(plot.title = element_text(size = 13, hjust = 0.5),
         legend.position = "bottom",
         legend.key.size = unit(0.8, "line"))
-report.public_weather.YYYYMMDDHHmm.summary.pdf 
 
-filename <- paste0("fig/report.public_weather.", format(end_time, "%Y%m%d%H%M"), ".preliminary_summary.png")
+
+filename <- paste0("fig/surface.public_weather.", format(end_time, "%Y%m%d%H%M"), ".preliminary_report.png")
 ggsave(filename, dpi = 300, height = 15, units = "cm")

@@ -5,14 +5,14 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "0",
+    "hash" : "2557985909",
     "id" : "3009602C",
-    "lastKnownWriteTime" : 1542223133,
-    "last_content_update" : 1542223133448,
+    "lastKnownWriteTime" : 1542224124,
+    "last_content_update" : 1542224124722,
     "path" : "~/RELAMPAGOReportes/preliminary_report.R",
     "project_path" : "preliminary_report.R",
     "properties" : {
-        "cursorPosition" : "99,84",
+        "cursorPosition" : "97,0",
         "scrollLine" : "83"
     },
     "relative_order" : 7,
