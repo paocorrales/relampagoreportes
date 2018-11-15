@@ -18,8 +18,9 @@ library(metR)
 
 ###### Reading the data from Google Spreadsheet
 #gs_ls() #Return a tibble with google sheets available
+path = "/home/paola.corrales/relampagoreportes/"
 
-gs_auth(token = "googlesheets_token.rds")
+gs_auth(token = paste0(path, "googlesheets_token.rds"))
 r <- gs_title("Reportes_preprocesados")
 reports <- setDF(gs_read(ss = r, ws = "Hoja 1"))
 
@@ -53,7 +54,7 @@ levels(reports_l$value) <- labels
 
 ##### Ploting
 
-mapa.ar <- readRDS("mapa.rds")
+mapa.ar <- readRDS(paste0(path, "mapa.rds"))
 
 day <- Sys.Date()
 
@@ -97,5 +98,5 @@ ggplot(df, aes(lon, lat)) +
         legend.key.size = unit(0.8, "line"))
 
 
-filename <- paste0("fig/surface.public_weather.", format(init_time, "%Y%m%d%H%M"), ".complete_report.png")
+filename <- paste0(path, "fig/surface.public_weather.", format(init_time, "%Y%m%d%H%M"), ".complete_report.png")
 ggsave(filename, dpi = 300, height = 15, units = "cm")

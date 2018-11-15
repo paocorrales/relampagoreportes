@@ -1,12 +1,22 @@
 #!/bin/bash
 
-infold='/home/paola.corrales/relampagoreportes/fig'
-day=$(date +%Y%m%d -d "yesterday")
-filename=${infold}'/surface.public_weather.'${day}'0900.preliminary_report.png'
+host='ftp://catalog.eol.ucar.edu'
+user='anonymous'
+pass='relampagoreportes@gmail.com'
+remote_dir='pub/incoming/catalog/relampago'
 
-ftp -n <<EOF
-open catalog.eol.ucar.edu
-user anonymous
-cd pub/incoming/catalog/relampago
+local_dir='/home/paola.corrales/relampagoreportes/fig'
+day=$(date +%Y%m%d -d "yesterday")
+filename=${local_dir}'/surface.public_weather.'${day}'0900.preliminary_report.png'
+
+lftp -u $user,$pass $host <<EOF
+# the next 3 lines put you in ftpes mode. Uncomment if you are having trouble connecting.
+#set ftp:ssl-force true
+#set ftp:ssl-protect-data true
+#set ssl:verify-certificate no
+# transfer starts now...
+cd $remote_dir
 put $filename
+exit
 EOF
+echo "Transfer finished"
